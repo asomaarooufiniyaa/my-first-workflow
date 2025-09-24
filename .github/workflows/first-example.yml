@@ -4,13 +4,32 @@ on: push
 
 
 jobs:   
-    first_job:
+    build_job_1:
       runs-on:  ubuntu-latest
       steps:
-      - name: checkout Repo
-        uses: actions/checkout@v5
- 
-      - name: welcome message
-        run: |
-          chmod +x shell-script.sh
-          ./shell-script.sh
+      - name: install cowsay programm
+        uses: sudo apt-get install cowsay -y
+
+      - name: execute Cowsay CMD
+        run: cowsay -f dragon "Hi my name is aso and im a dragon" >> dragon.txt
+
+      - name: sleep for 10 seconds
+        run: sleep 10
+    
+    test_job_2:
+      runs-on: ubuntu-latest
+      steps:
+        - name: sleep for 10 seconds
+          run: sleep 10
+
+        - name: test file exists
+          run: grep -i "dragon" dragon.txt
+
+    deploy_job_3:
+      runs-on: ubuntu-latest
+      steps:
+        - name: Read file
+          run: cat dragon.txt
+
+        - name: Deploy
+          run: echo Deploying....
